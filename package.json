@@ -1,0 +1,16 @@
+{
+  "name": "yet-another-music-player",
+  "version": "1.0.0",
+  "description": "ya2p",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron --trace-warnings ."
+  },
+  "author": "loglot",
+  "license": "ISC",
+  "devDependencies": {
+    "@electron/packager": "^18.3.6",
+    "electron": "^33.3.1",
+    "electron-builder": "^25.1.8"
+  }
+}
