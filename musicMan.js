@@ -10,6 +10,10 @@ var gradY = 1
 var targGradX = 1
 var targGradY = 1
 var latch = true
+var state = "playing"
+
+var targetColor = [31,31,31]
+var Color = [31,31,31]
 
 var playingText = "place of holding"
 function resizeCanvas() {
@@ -25,10 +29,10 @@ window.addEventListener('resize', resizeCanvas);
 function draw(){
   ctx.clearRect(0, 0, width, height); 
   const gradient = ctx.createLinearGradient(0, 0, gradX, gradY);
-  gradient.addColorStop(0, "#1f1f1f");
-  gradient.addColorStop(.96999, "#1f1f1f");
-  gradient.addColorStop(.97, "#0f0f0f");
-  gradient.addColorStop(.99999, "#0f0f0f");
+  gradient.addColorStop(0, `rgb(${(Color[0]-16)+","+(Color[1]-16)+","+(Color[2]-16)})`);
+  gradient.addColorStop(.96999, `rgb(${Color[0]+","+Color[1]+","+Color[2]})`);
+  gradient.addColorStop(.97, `rgb(${Color[0]+","+Color[1]+","+Color[2]})`);
+  gradient.addColorStop(.99999, `rgb(${(Color[0]-16)+","+(Color[1]-16)+","+(Color[2]-16)})`);
   gradient.addColorStop(1, "#0000");
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, width, height);

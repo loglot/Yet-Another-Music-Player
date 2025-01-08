@@ -7,7 +7,7 @@ const createWindow = () => {
 const win = new BrowserWindow({
   width: 192000,
   height: 108000,
-  transparent: true, frame: false
+  transparent: true, frame: false,
 })
 win.setIgnoreMouseEvents(true)
 win.setAlwaysOnTop(true, 'screen');
