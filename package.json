@@ -1,7 +1,7 @@
 {
   "name": "yet-another-music-player",
   "version": "1.0.0",
-  "description": "ya2p",
+  "description": "yamp",
   "main": "main.js",
   "scripts": {
     "start": "electron --trace-warnings ."
