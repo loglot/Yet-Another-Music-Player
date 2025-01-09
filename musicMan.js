@@ -1,5 +1,9 @@
 
+window.addEventListener('unhandledrejection', function (e) {
+  console.error(e.reason.message)
+  window.error=true
 
+})
 addEventListener("keydown", (event) => {
   if(event.key == "a"){
     window.Expand = true
@@ -8,8 +12,8 @@ addEventListener("keydown", (event) => {
     window.Pause = true
   }
 });
-//window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV","song6.WAV","song7.WAV","song8.WAV","song9.WAV","song10.WAV",]
-
+window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV","song6.WAV","song7.WAV","song8.WAV","song9.WAV","song10.WAV",]
+var randList=[]
 const canvas = document.getElementById('music');
 const ctx = canvas.getContext('2d');
 var width = 0
@@ -68,6 +72,7 @@ function draw(){
 }
 
 function tick(){
+  dPrint()
   if(window.Expand){
     window.Expand = false
     if(expanded){
@@ -95,7 +100,7 @@ function tick(){
   if(state==="paused"){
     targetColor = [31,31,31]
   }
-  if(state==="error"){
+  if(window.error == true){
     targetColor = [91,41,21]
   }
   draw()
@@ -109,30 +114,36 @@ function tick(){
 }
 async function trueTicker(){
   if(window.songList){
-    if(!audio||audio.currentTime>audio.duration-.5){
-      var rand=Math.floor(Math.random()*window.songList.length)
-      audio = new Audio(`./music/${window.songList[rand]}`);
+    if(!audio||audio.currentTime>audio.duration-.5|| (latch)){
+      if(randList.length<=2){
+        MakeRandomList()
+      }
+      audio = new Audio(`./music/${randList[0]}`);
       console.log(gradX, targGradX)
       latch=false
-      playingText = window.songList[rand]
+      playingText = randList[0]
+      randList.splice(0,1)
+      targGradX = 150
+      targGradY = 300
       await sleep(1000)
       state = "playing"
-      targGradX = 150
-
-      targGradY = 300
       // state = "playing"
+      // latch=true
       audio.play()
       await sleep(3000)
       targGradX = 30
       targGradY = 15
-      latch=true
-
-
     }
   }
 }
-async function timedplay(params) {
-  
+
+function MakeRandomList(){
+  let listStore = window.songList.slice()
+  for(let i = 0; i < window.songList.length; i++){
+    let rand=Math.floor(Math.random()*listStore.length)
+    randList[i] = listStore[rand]
+    listStore.splice(rand,1)
+  }
 }
 
 requestAnimationFrame(tick)
@@ -140,4 +151,14 @@ requestAnimationFrame(tick)
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-//requiring path and fs modules
+
+
+var dBuffer = ""
+
+function dPrint(){
+  document.getElementById("debug").innerHTML = `${dBuffer}`;
+  dBuffer=""
+}
+function dAdd(text){
+  dBuffer=dBuffer+""+text+"\n"
+}
