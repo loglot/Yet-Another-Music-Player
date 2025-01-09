@@ -1,5 +1,14 @@
 
 
+addEventListener("keydown", (event) => {
+  if(event.key == "a"){
+    window.Expand = true
+  }
+  if(event.key == "p"){
+    window.Pause = true
+  }
+});
+//window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV","song6.WAV","song7.WAV","song8.WAV","song9.WAV","song10.WAV",]
 
 const canvas = document.getElementById('music');
 const ctx = canvas.getContext('2d');
