@@ -1,6 +1,7 @@
 
 window.addEventListener('unhandledrejection', function (e) {
   console.error(e.reason.message)
+  // alert(e.reason.message)
   window.error=true
 
 })
@@ -14,21 +15,25 @@ addEventListener("keydown", (event) => {
   if(event.key == "s"){
     window.Skip = true
   }
+  if(event.key == "k"){
+    window.KeyBinds = true
+  }
 });
-// window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV","song6.WAV","song7.WAV","song8.WAV","song9.WAV","song10.WAV",]
+window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV","song6.WAV","song7.WAV","song8.WAV","song9.WAV","song10.WAV",]
 var randList=[]
 const canvas = document.getElementById('music');
 const ctx = canvas.getContext('2d');
 var width = 0
 var height = 0
-var gradX = 1
-var gradY = 1
-var targGradX = 30
-var targGradY = 15
+var gradX = [1,1]
+var gradY = [1,1]
+var targGradX = [30,100]
+var targGradY = [15,150]
 var latch = true
 var state = "paused"
 var expanded = false
 var paused = false
+var keyBinds = false
 
 var audio
 var targetColor = [0,0,0]
@@ -44,14 +49,14 @@ function resizeCanvas() {
 }
 
 function expand(){
-  targGradX = 150
-  targGradY = 300
+  targGradX[0] = 150
+  targGradY[0] = 300
   expanded = true
 
 }
 function unexpand(){
-  targGradX = 30
-  targGradY = 15
+  targGradX[0] = 30
+  targGradY[0] = 15
   expanded = false
 
 }
@@ -60,7 +65,7 @@ window.addEventListener('resize', resizeCanvas);
 
 function draw(){
   ctx.clearRect(0, 0, width, height); 
-  const gradient = ctx.createLinearGradient(0, 0, gradX, gradY);
+  var gradient = ctx.createLinearGradient(0, 0, gradX[0], gradY[0]);
   gradient.addColorStop(0, `rgb(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)})`);
   gradient.addColorStop(.96999, `rgb(${(Color[0]+16)+","+(Color[1]+16)+","+(Color[2]+16)})`);
   gradient.addColorStop(.8, `rgb(${Color[0]+","+Color[1]+","+Color[2]})`);
@@ -71,10 +76,31 @@ function draw(){
   ctx.fillRect(0, 0, width, height);
   ctx.fillStyle = "#fff";
   ctx.font = "48px serif";
-  ctx.fillText(`> ${playingText}`, -990+gradY*3.4, -100+gradX);
+  ctx.fillText(`> ${playingText}`, -990+gradY[0]*3.4, -100+gradX[0]);
+
+
+  gradient = ctx.createLinearGradient(width, height, width-gradX[1], height-gradY[1]);
+  gradient.addColorStop(0, `rgb(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)})`);
+  gradient.addColorStop(.96999, `rgb(${(Color[0]+16)+","+(Color[1]+16)+","+(Color[2]+16)})`);
+  gradient.addColorStop(.8, `rgb(${Color[0]+","+Color[1]+","+Color[2]})`);
+  gradient.addColorStop(.97, `rgb(${Color[0]+","+Color[1]+","+Color[2]})`);
+  gradient.addColorStop(.99999, `rgb(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)})`);
+  gradient.addColorStop(1, "#0000");
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, width, height);
+  ctx.fillStyle = "#fff";
+  ctx.font = "48px serif";
+  ctx.fillText(`Alt+K`, width-140, height-(gradY[1]-100));
+  ctx.fillText(`Alt+A`, width-160, height/2+50);
+  ctx.fillText(`Alt+P`, width-160, height/2);
+  ctx.fillText(`Alt+S`, width-160, height/2-50);
+
+
+
 }
 
 function tick(){
+  requestAnimationFrame(tick)
   dPrint()
   if(window.Expand){
     window.Expand = false
@@ -87,6 +113,12 @@ function tick(){
   if(window.Skip){
     window.Skip = false
     latch=true
+  }
+  if(window.KeyBinds){
+    window.KeyBinds = false
+    targGradX[1] = 250
+    targGradY[1] = 0
+
   }
   if(window.Pause){
     window.Pause = false
@@ -111,13 +143,15 @@ function tick(){
     targetColor = [91,41,21]
   }
   draw()
-  gradX = ((gradX*30)+targGradX)/31
-  gradY = ((gradY*30)+targGradY)/31
+  for(let i = 0; i < gradX.length; i++){
+    gradX[i] = ((gradX[i]*30)+targGradX[i])/31
+    gradY[i] = ((gradY[i]*30)+targGradY[i])/31
+      
+  }
   for(let i = 0; i<3;i++){
     Color[i]=((Color[i]*50)+targetColor[i])/51
   }
   trueTicker()
-  requestAnimationFrame(tick)
 }
 async function trueTicker(){
   if(window.songList){
@@ -126,20 +160,19 @@ async function trueTicker(){
         MakeRandomList()
       }
       audio = new Audio(`./music/${randList[0]}`);
-      console.log(gradX, targGradX)
       latch=false
       playingText = randList[0]
       randList.splice(0,1)
-      targGradX = 150
-      targGradY = 300
+      targGradX[0] = 150
+      targGradY[0] = 300
       await sleep(1000)
       state = "playing"
       // state = "playing"
       // latch=true
       audio.play()
       await sleep(3000)
-      targGradX = 30
-      targGradY = 15
+      targGradX[0] = 30
+      targGradY[0] = 15
     }
   }
 }
