@@ -11,8 +11,11 @@ addEventListener("keydown", (event) => {
   if(event.key == "p"){
     window.Pause = true
   }
+  if(event.key == "s"){
+    window.Skip = true
+  }
 });
-window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV","song6.WAV","song7.WAV","song8.WAV","song9.WAV","song10.WAV",]
+// window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV","song6.WAV","song7.WAV","song8.WAV","song9.WAV","song10.WAV",]
 var randList=[]
 const canvas = document.getElementById('music');
 const ctx = canvas.getContext('2d');
@@ -80,6 +83,10 @@ function tick(){
     }else{
       expand()
     }
+  }
+  if(window.Skip){
+    window.Skip = false
+    latch=true
   }
   if(window.Pause){
     window.Pause = false
