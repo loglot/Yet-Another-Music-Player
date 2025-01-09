@@ -19,7 +19,7 @@ addEventListener("keydown", (event) => {
     window.KeyBinds = true
   }
 });
-window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV","song6.WAV","song7.WAV","song8.WAV","song9.WAV","song10.WAV",]
+// window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV","song6.WAV","song7.WAV","song8.WAV","song9.WAV","song10.WAV",]
 var randList=[]
 const canvas = document.getElementById('music');
 const ctx = canvas.getContext('2d');
@@ -91,9 +91,9 @@ function draw(){
   ctx.fillStyle = "#fff";
   ctx.font = "48px serif";
   ctx.fillText(`Alt+K`, width-140, height-(gradY[1]-100));
-  ctx.fillText(`Alt+A`, width-160, height/2+50);
-  ctx.fillText(`Alt+P`, width-160, height/2);
-  ctx.fillText(`Alt+S`, width-160, height/2-50);
+  ctx.fillText(`Alt+A`, width-gradX[1]+60+gradY[1]/2, height/2+50+gradY[1]/1.3);
+  ctx.fillText(`Alt+P`, width-gradX[1]+60+gradY[1], height/2+gradY[1]);
+  ctx.fillText(`Alt+S`, width-gradX[1]+60+gradY[1]/.5, height/2-50+gradY[1]/.7);
 
 
 
@@ -116,8 +116,16 @@ function tick(){
   }
   if(window.KeyBinds){
     window.KeyBinds = false
-    targGradX[1] = 250
-    targGradY[1] = 0
+    if(keyBinds == true){
+      keyBinds = false
+      targGradX[1] = 30
+      targGradY[1] = 15
+
+    } else{
+      keyBinds = true
+      targGradX[1] = 250
+      targGradY[1] = 0
+    }
 
   }
   if(window.Pause){
