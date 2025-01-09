@@ -7,10 +7,11 @@ var width = 0
 var height = 0
 var gradX = 1
 var gradY = 1
-var targGradX = 18
-var targGradY = 18
+var targGradX = 30
+var targGradY = 15
 var latch = true
 var state = "paused"
+var expanded = false
 
 var targetColor = [0,0,0]
 var Color = [155,155,155]
@@ -23,6 +24,19 @@ function resizeCanvas() {
   height = window.innerHeight
 
 }
+
+function expand(){
+  targGradX = 150
+  targGradY = 300
+  expanded = true
+
+}
+function unexpand(){
+  targGradX = 30
+  targGradY = 15
+  expanded = false
+
+}
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
@@ -31,7 +45,7 @@ function draw(){
   const gradient = ctx.createLinearGradient(0, 0, gradX, gradY);
   gradient.addColorStop(0, `rgb(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)})`);
   gradient.addColorStop(.96999, `rgb(${(Color[0]+16)+","+(Color[1]+16)+","+(Color[2]+16)})`);
-  gradient.addColorStop(.5, `rgb(${Color[0]+","+Color[1]+","+Color[2]})`);
+  gradient.addColorStop(.8, `rgb(${Color[0]+","+Color[1]+","+Color[2]})`);
   gradient.addColorStop(.97, `rgb(${Color[0]+","+Color[1]+","+Color[2]})`);
   gradient.addColorStop(.99999, `rgb(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)})`);
   gradient.addColorStop(1, "#0000");
@@ -43,6 +57,14 @@ function draw(){
 }
 
 function tick(){
+  if(window.Expand){
+    window.Expand = false
+    if(expanded){
+      unexpand()
+    }else{
+      expand()
+    }
+  }
   if(state=="playing"){
     targetColor = [41,91,21]
   }
@@ -58,7 +80,6 @@ function tick(){
   for(let i = 0; i<3;i++){
     Color[i]=((Color[i]*50)+targetColor[i])/51
   }
-  console.log(gradX, targGradX)
   trueTicker()
   requestAnimationFrame(tick)
 }
@@ -75,8 +96,8 @@ async function trueTicker(){
       playingText = window.songList[rand]
       audio.play()
       await sleep(3000)
-      targGradX = 18
-      targGradY = 18
+      targGradX = 30
+      targGradY = 15
       await sleep(audio.duration*1000-3000)
       latch=true
 

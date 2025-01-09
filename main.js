@@ -1,12 +1,11 @@
-  const {protocol, app, BrowserWindow } = require('electron')
+  const {protocol, app, BrowserWindow, globalShortcut } = require('electron')
   const path = require('path');
   const fs = require('fs');
 
-
 const createWindow = () => {
 const win = new BrowserWindow({
-  width: 192000,
-  height: 108000,
+  width: 392,
+  height: 308,
   transparent: true, frame: false,
 })
 win.setIgnoreMouseEvents(true)
@@ -14,6 +13,11 @@ win.setAlwaysOnTop(true, 'screen');
   win.loadFile('index.html')
    win.setFullScreen(true)
   // win.webContents.on('did-finish-load', () => {
+  const ret = globalShortcut.register('alt+A', () => {
+    win.webContents.executeJavaScript(`window.Expand = true`)
+
+
+  })
     
 const directoryPath = path.join(__dirname, './music');
 var songList = []
