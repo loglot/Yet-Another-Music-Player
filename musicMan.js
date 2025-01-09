@@ -27,15 +27,15 @@ var width = 0
 var height = 0
 var gradX = [1,1]
 var gradY = [1,1]
-var targGradX = [30,100]
-var targGradY = [15,150]
+var targGradX = [30,80]
+var targGradY = [15,180]
 var latch = true
 var state = "paused"
 var expanded = false
 var paused = false
 var keyBinds = false
 
-var audio
+var audio =new Audio()
 var targetColor = [0,0,0]
 var Color = [155,155,155]
 
@@ -90,10 +90,10 @@ function draw(){
   ctx.fillRect(0, 0, width, height);
   ctx.fillStyle = "#fff";
   ctx.font = "48px serif";
-  ctx.fillText(`Alt+K`, width-140, height-(gradY[1]-100));
-  ctx.fillText(`Alt+A`, width-gradX[1]+60+gradY[1]/2, height/2+50+gradY[1]/1.3);
-  ctx.fillText(`Alt+P`, width-gradX[1]+60+gradY[1], height/2+gradY[1]);
-  ctx.fillText(`Alt+S`, width-gradX[1]+60+gradY[1]/.5, height/2-50+gradY[1]/.7);
+  ctx.fillText(`Alt+Shift+K`, width-270, height-(gradY[1]-140));
+  ctx.fillText(`Alt+Shift+A`, width-gradX[1]+60+gradY[1]*4, height/2+50+gradY[1]*2);
+  ctx.fillText(`Alt+Shift+P`, width-gradX[1]+60+gradY[1]*5, height/2+gradY[1]*2);
+  ctx.fillText(`Alt+Shift+S`, width-gradX[1]+60+gradY[1]*6, height/2-50+gradY[1]*2);
 
 
 
@@ -123,7 +123,7 @@ function tick(){
 
     } else{
       keyBinds = true
-      targGradX[1] = 250
+      targGradX[1] = 400
       targGradY[1] = 0
     }
 
@@ -164,6 +164,7 @@ function tick(){
 async function trueTicker(){
   if(window.songList){
     if(!audio||audio.currentTime>audio.duration-.5|| (latch)){
+      audio.pause()
       if(randList.length<=2){
         MakeRandomList()
       }

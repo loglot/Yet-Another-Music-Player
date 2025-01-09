@@ -13,11 +13,17 @@ win.setAlwaysOnTop(true, 'screen');
   win.loadFile('index.html')
    win.setFullScreen(true)
   // win.webContents.on('did-finish-load', () => {
-  const expand = globalShortcut.register('alt+A', () => {
+  const expand = globalShortcut.register('alt+shift+A', () => {
     win.webContents.executeJavaScript(`window.Expand = true`)
   })
-  const pause = globalShortcut.register('alt+P', () => {
+  const pause = globalShortcut.register('alt+shift+P', () => {
     win.webContents.executeJavaScript(`window.Pause = true`)
+  })
+  const skip = globalShortcut.register('alt+shift+S', () => {
+    win.webContents.executeJavaScript(`window.Skip = true`)
+  })
+  const keys = globalShortcut.register('alt+shift+K', () => {
+    win.webContents.executeJavaScript(`window.KeyBinds = true`)
   })
     
 const directoryPath = path.join(__dirname, './music');
