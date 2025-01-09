@@ -12,7 +12,9 @@ var targGradY = 15
 var latch = true
 var state = "paused"
 var expanded = false
+var paused = false
 
+var audio
 var targetColor = [0,0,0]
 var Color = [155,155,155]
 
@@ -65,13 +67,26 @@ function tick(){
       expand()
     }
   }
-  if(state=="playing"){
+  if(window.Pause){
+    window.Pause = false
+    if(paused){
+      audio.play()
+      paused = !paused
+      state = "playing"
+    }else{
+      audio.pause()
+      paused = !paused
+      state = "paused"
+    }
+
+  }
+  if(state==="playing"){
     targetColor = [41,91,21]
   }
-  if(state=="paused"){
+  if(state==="paused"){
     targetColor = [31,31,31]
   }
-  if(state=="error"){
+  if(state==="error"){
     targetColor = [91,41,21]
   }
   draw()
@@ -85,20 +100,22 @@ function tick(){
 }
 async function trueTicker(){
   if(window.songList){
-    if(latch){
-      targGradX = 150
-      targGradY = 300
+    if(!audio||audio.currentTime>audio.duration-.5){
+      var rand=Math.floor(Math.random()*window.songList.length)
+      audio = new Audio(`./music/${window.songList[rand]}`);
       console.log(gradX, targGradX)
       latch=false
-      state = "playing"
-      var rand=Math.floor(Math.random()*window.songList.length)
-      var audio = new Audio(`./music/${window.songList[rand]}`);
       playingText = window.songList[rand]
+      await sleep(1000)
+      state = "playing"
+      targGradX = 150
+
+      targGradY = 300
+      // state = "playing"
       audio.play()
       await sleep(3000)
       targGradX = 30
       targGradY = 15
-      await sleep(audio.duration*1000-3000)
       latch=true
 
 

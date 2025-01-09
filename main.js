@@ -4,8 +4,8 @@
 
 const createWindow = () => {
 const win = new BrowserWindow({
-  width: 392,
-  height: 308,
+  width: 592,
+  height: 508,
   transparent: true, frame: false,
 })
 win.setIgnoreMouseEvents(true)
@@ -13,10 +13,11 @@ win.setAlwaysOnTop(true, 'screen');
   win.loadFile('index.html')
    win.setFullScreen(true)
   // win.webContents.on('did-finish-load', () => {
-  const ret = globalShortcut.register('alt+A', () => {
+  const expand = globalShortcut.register('alt+A', () => {
     win.webContents.executeJavaScript(`window.Expand = true`)
-
-
+  })
+  const pause = globalShortcut.register('alt+P', () => {
+    win.webContents.executeJavaScript(`window.Pause = true`)
   })
     
 const directoryPath = path.join(__dirname, './music');
