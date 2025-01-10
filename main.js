@@ -8,6 +8,7 @@ const win = new BrowserWindow({
   height: 508,
   transparent: true, frame: false,
 })
+win.webContents.executeJavaScript(`window.WebEdition = false`)
 win.setIgnoreMouseEvents(true)
 win.setAlwaysOnTop(true, 'screen');
   win.loadFile('index.html')

@@ -1,4 +1,4 @@
-
+window.WebEdition = true
 window.addEventListener('unhandledrejection', function (e) {
   console.error(e.reason.message)
   // alert(e.reason.message)
@@ -19,7 +19,7 @@ addEventListener("keydown", (event) => {
     window.KeyBinds = true
   }
 });
-window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV","song6.WAV","song7.WAV","song8.WAV","song9.WAV","song10.WAV",]
+window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV"]
 var randList=[]
 const canvas = document.getElementById('music');
 const ctx = canvas.getContext('2d');
@@ -34,6 +34,7 @@ var state = "paused"
 var expanded = false
 var paused = false
 var keyBinds = false
+var songCount=0
 
 var audio =new Audio()
 var image =new Image(100)
@@ -100,6 +101,13 @@ function draw(){
   ctx.fillText(`Alt+Shift+A`, width-gradX[1]+60+gradY[1]*4, height/2+50+gradY[1]*2);
   ctx.fillText(`Alt+Shift+P`, width-gradX[1]+60+gradY[1]*5, height/2+gradY[1]*2);
   ctx.fillText(`Alt+Shift+S`, width-gradX[1]+60+gradY[1]*6, height/2-50+gradY[1]*2);
+  ctx.fillStyle = "#0005";
+  if(window.WebEdition){
+    ctx.fillText(`You Are On The Limited Web Version`, 10, height-106);
+    ctx.fillText(`There Is Limited Music Included`, 10, height-58);
+    ctx.fillText(`ALT+SHIFT are disabled for keybinds`, 10, height-10);
+  
+  }
 
 
 
@@ -178,6 +186,8 @@ async function trueTicker(){
       image.src = `./coverArt/YA2P.PNG`
       latch=false
       playingText = randList[0]
+      songCount++
+      var skipCheck = songCount
       randList.splice(0,1)
       targGradX[0] = 150
       targGradY[0] = 300
@@ -187,8 +197,11 @@ async function trueTicker(){
       // latch=true
       audio.play()
       await sleep(3000)
-      targGradX[0] = 30
-      targGradY[0] = 15
+      if(songCount==skipCheck){
+        targGradX[0] = 30
+        targGradY[0] = 15
+  
+      }
     }
   }
 }
