@@ -19,7 +19,7 @@ addEventListener("keydown", (event) => {
     window.KeyBinds = true
   }
 });
-// window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV","song6.WAV","song7.WAV","song8.WAV","song9.WAV","song10.WAV",]
+window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV","song6.WAV","song7.WAV","song8.WAV","song9.WAV","song10.WAV",]
 var randList=[]
 const canvas = document.getElementById('music');
 const ctx = canvas.getContext('2d');
@@ -36,6 +36,7 @@ var paused = false
 var keyBinds = false
 
 var audio =new Audio()
+var image =new Image(100)
 var targetColor = [0,0,0]
 var Color = [155,155,155]
 
@@ -77,7 +78,12 @@ function draw(){
   ctx.fillStyle = "#fff";
   ctx.font = "48px serif";
   ctx.fillText(`> ${playingText}`, -990+gradY[0]*3.4, -100+gradX[0]);
-
+  ctx.beginPath()
+  ctx.fillStyle = `rgb(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)})`;
+  ctx.roundRect(gradY[0]-290,-420+gradX[0]*3.4,170,170,5)
+  ctx.fill();
+  ctx.drawImage(image,gradY[0]-280,-410+gradX[0]*3.4,150,150)
+  ctx.closePath()
 
   gradient = ctx.createLinearGradient(width, height, width-gradX[1], height-gradY[1]);
   gradient.addColorStop(0, `rgb(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)})`);
@@ -150,7 +156,6 @@ function tick(){
   if(window.error == true){
     targetColor = [91,41,21]
   }
-  draw()
   for(let i = 0; i < gradX.length; i++){
     gradX[i] = ((gradX[i]*30)+targGradX[i])/31
     gradY[i] = ((gradY[i]*30)+targGradY[i])/31
@@ -160,6 +165,7 @@ function tick(){
     Color[i]=((Color[i]*50)+targetColor[i])/51
   }
   trueTicker()
+  draw()
 }
 async function trueTicker(){
   if(window.songList){
@@ -169,6 +175,7 @@ async function trueTicker(){
         MakeRandomList()
       }
       audio = new Audio(`./music/${randList[0]}`);
+      image.src = `./coverArt/YA2P.PNG`
       latch=false
       playingText = randList[0]
       randList.splice(0,1)
