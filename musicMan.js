@@ -35,6 +35,8 @@ var expanded = false
 var paused = false
 var keyBinds = false
 var songCount=0
+var centerLogoA=[0,0]
+var centerLogoVel=.0001
 
 var audio =new Audio()
 var image =new Image(100)
@@ -97,18 +99,35 @@ function draw(){
   ctx.fillRect(0, 0, width, height);
   ctx.fillStyle = "#fff";
   ctx.font = "48px serif";
-  ctx.fillText(`Alt+Shift+K`, width-270, height-(gradY[1]-140));
-  ctx.fillText(`Alt+Shift+A`, width-gradX[1]+60+gradY[1]*4, height/2+50+gradY[1]*2);
-  ctx.fillText(`Alt+Shift+P`, width-gradX[1]+60+gradY[1]*5, height/2+gradY[1]*2);
-  ctx.fillText(`Alt+Shift+S`, width-gradX[1]+60+gradY[1]*6, height/2-50+gradY[1]*2);
-  ctx.fillStyle = "#0005";
+  ctx.fillText(``, width-gradX[1]+60+gradY[1]*4, height/2+50+gradY[1]*2);
+  ctx.fillText(``, width-gradX[1]+60+gradY[1]*5, height/2+gradY[1]*2);
+  ctx.fillText(`A: Expands Song`, width-gradX[1]+30+gradY[1]*6, height/2-50+gradY[1]*2);
+  ctx.fillText(`S: Skips Song`, width-gradX[1]+30+gradY[1]*6, height/2-0+gradY[1]*2);
+  ctx.fillText(`P: Pauses Song`, width-gradX[1]+30+gradY[1]*6, height/2+50+gradY[1]*2);
+
   if(window.WebEdition){
+    ctx.fillText(`K: KeyBinds`, width-270, height-(gradY[1]-140));
+    ctx.fillStyle = "#0005";
     ctx.fillText(`You Are On The Limited Web Version`, 10, height-106);
     ctx.fillText(`There Is Limited Music Included`, 10, height-58);
     ctx.fillText(`ALT+SHIFT are disabled for keybinds`, 10, height-10);
   
+  } else{
+    ctx.fillText(`Alt+Shift+`, width-gradX[1]+30+gradY[1]*6, height/2-125+gradY[1]*2);
+    ctx.fillText(`Alt+Shift+K`, width-270, height-(gradY[1]-140));
+
   }
 
+
+  ctx.fillStyle = `rgba(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)+","+(centerLogoA[1])})`;
+  ctx.fillRect(width/2-50-25,height/2-100, 50, 200)
+  ctx.fillRect(width/2+50-25,height/2-100, 50, 200)
+  ctx.fillStyle = `rgba(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)+","+(centerLogoA[0])})`;
+  ctx.beginPath()
+  ctx.moveTo(width/2-50-25, height/2-100);
+  ctx.lineTo(width/2+100-25, height/2);
+  ctx.lineTo(width/2-50-25, height/2+100);  
+  ctx.fill()
 
 
 }
@@ -148,12 +167,25 @@ function tick(){
       audio.play()
       paused = !paused
       state = "playing"
+      centerLogoA[0]=1
+      centerLogoA[1]=0
     }else{
       audio.pause()
       paused = !paused
       state = "paused"
+      centerLogoA[1]=1
+      centerLogoA[0]=0
     }
+    centerLogoVel=0.0001
 
+  }
+  centerLogoA[0]-=centerLogoVel
+  centerLogoA[1]-=centerLogoVel
+  centerLogoVel*=1.1
+  if(centerLogoVel>.3){
+
+  centerLogoA[0]=0
+  centerLogoA[1]=0
   }
   if(state==="playing"){
     targetColor = [41,91,21]
