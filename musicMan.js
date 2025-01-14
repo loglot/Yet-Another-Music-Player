@@ -208,14 +208,23 @@ function tick(){
   draw()
 }
 async function trueTicker(){
-  if(window.songList){
+  if(window.songList&&window.imageList){
     if(!audio||audio.currentTime>audio.duration-.5|| (latch)){
       audio.pause()
       if(randList.length<=2){
         MakeRandomList()
       }
       audio = new Audio(`./music/${randList[0]}`);
-      image.src = `./coverArt/YA2P.PNG`
+      image.src = `./coverArt/placeholder.PNG`
+      var substringthing = randList[0].substring(0, randList[0].length-4)
+      for(let i = 0; i<window.imageList.length; i++){
+
+        if(substringthing==window.imageList[i].substring(0, window.imageList[i].length-4)){
+          image.src = `./coverArt/${window.imageList[i]}`
+
+        }
+        console.log(substringthing+"; "+window.imageList[i].substring(0, window.imageList[i].length-4))
+      }
       latch=false
       playingText = randList[0]
       songCount++

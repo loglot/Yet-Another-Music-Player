@@ -4,15 +4,15 @@
 
 const createWindow = () => {
 const win = new BrowserWindow({
-  width: 592,
-  height: 508,
+  width: 592000,
+  height: 508000,
   transparent: true, frame: false,
 })
 win.webContents.executeJavaScript(`window.WebEdition = false`)
-win.setIgnoreMouseEvents(true)
-win.setAlwaysOnTop(true, 'screen');
+// win.setIgnoreMouseEvents(true)
+// win.setAlwaysOnTop(true, 'screen');
   win.loadFile('index.html')
-   win.setFullScreen(true)
+  //  win.setFullScreen(true)
   // win.webContents.on('did-finish-load', () => {
   const expand = globalShortcut.register('alt+shift+A', () => {
     win.webContents.executeJavaScript(`window.Expand = true`)
@@ -38,6 +38,18 @@ fs.readdir(directoryPath, function (err, files) {
     });
     console.log(songList); 
     win.webContents.executeJavaScript(`window.songList=[${songList}]`)
+});
+const directorPath = path.join(__dirname, './coverArt');
+var imageList = []
+fs.readdir(directorPath, function (err, files) {
+    if (err) {
+        return console.log('Unable to scan directory: ' + err);
+    } 
+    files.forEach(function (file) {
+      imageList[imageList.length]=`"${file}"`
+    });
+    console.log(imageList); 
+    win.webContents.executeJavaScript(`window.imageList=[${imageList}]`)
 });
 }
 app.on('window-all-closed', () => {
