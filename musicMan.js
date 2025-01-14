@@ -20,6 +20,7 @@ addEventListener("keydown", (event) => {
   }
 });
 window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV"]
+window.imageList=["song1.png","song2.png","song3.png","song4.png","song5.png"]
 var randList=[]
 const canvas = document.getElementById('music');
 const ctx = canvas.getContext('2d');
