@@ -1,10 +1,32 @@
 window.WebEdition = true
+var errorStore = ""
+window.addEventListener("error", function (e) {
+  console.error(e)
+  window.error=true
+  document.getElementById("debug").innerHTML = e.message
+  if(e.message!=errorStore){
+    alert(e.message)
+    errorStore=e.message
+  }
+})
 window.addEventListener('unhandledrejection', function (e) {
   console.error(e.reason.message)
   // alert(e.reason.message)
   window.error=true
+  document.getElementById("debug").innerHTML = e.reason.message
+  if(e.reason.message!=errorStore){
+    alert(e.reason.message)
+    errorStore=e.reason.message
+  }
 
 })
+// window.onerror = function (event, souce, lineno, colon, error) { 
+//   console.error(event)
+//   alert(event.reason.message)
+//   window.error=true
+//   document.getElementById("debug").innerHTML = event.reason.message
+  
+// }
 addEventListener("keydown", (event) => {
   if(event.key == "a"){
     window.Expand = true
@@ -19,8 +41,6 @@ addEventListener("keydown", (event) => {
     window.KeyBinds = true
   }
 });
-window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV"]
-window.imageList=["song1.png","song2.png","song3.png","song4.png","song5.png"]
 var randList=[]
 const canvas = document.getElementById('music');
 const ctx = canvas.getContext('2d');
@@ -38,6 +58,7 @@ var keyBinds = false
 var songCount=0
 var centerLogoA=[0,0]
 var centerLogoVel=.0001
+var listSet = false
 
 var audio =new Audio()
 var image =new Image(100)
@@ -207,6 +228,20 @@ function tick(){
   }
   trueTicker()
   draw()
+  if(!listSet){
+    listSet=true
+
+    SetList()
+  }
+}
+async function SetList(){
+  await sleep(5000)
+  if(!window.songList){
+   
+    window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV"]
+    window.imageList=["song1.png","song2.png","song3.png","song4.png","song5.png"]
+ 
+  }
 }
 async function trueTicker(){
   if(window.songList&&window.imageList){
@@ -216,7 +251,7 @@ async function trueTicker(){
         MakeRandomList()
       }
       audio = new Audio(`./music/${randList[0]}`);
-      image.src = `./coverArt/placeholder.PNG`
+      image.src = `./coverArt/placeholder.png`
       var substringthing = randList[0].substring(0, randList[0].length-4)
       for(let i = 0; i<window.imageList.length; i++){
 
@@ -267,7 +302,7 @@ function sleep(ms) {
 var dBuffer = ""
 
 function dPrint(){
-  document.getElementById("debug").innerHTML = `${dBuffer}`;
+  document.getElementById("debuger").innerHTML = `${dBuffer}`;
   dBuffer=""
 }
 function dAdd(text){
