@@ -11,7 +11,7 @@ const win = new BrowserWindow({
 win.webContents.executeJavaScript(`window.WebEdition = false`)
 // win.setIgnoreMouseEvents(true)
 // win.setAlwaysOnTop(true, 'screen');
-  win.loadFile('index.html')
+  win.loadFile('indexDesk.html')
   //  win.setFullScreen(true)
   // win.webContents.on('did-finish-load', () => {
   const expand = globalShortcut.register('alt+shift+A', () => {

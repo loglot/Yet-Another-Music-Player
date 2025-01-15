@@ -91,7 +91,18 @@ window.addEventListener('resize', resizeCanvas);
 
 function draw(){
   ctx.clearRect(0, 0, width, height); 
-  var gradient = ctx.createLinearGradient(0, 0, gradX[0], gradY[0]);
+  var gradient
+  if(window.WebEdition){
+    ctx.fillStyle = `rgb(${(Color[0]+16)+","+(Color[1]+16)+","+(Color[2]+16)})`;
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = `rgb(${Color[0]+","+Color[1]+","+Color[2]})`;
+    ctx.fillRect(0, 0, width, height-70);
+    ctx.fillRect(120, 0, width, height);
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, width, height-75);
+    ctx.fillRect(125, 0, width, height);
+  }
+  gradient = ctx.createLinearGradient(0, 0, gradX[0], gradY[0]);
   gradient.addColorStop(0, `rgb(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)})`);
   gradient.addColorStop(.96999, `rgb(${(Color[0]+16)+","+(Color[1]+16)+","+(Color[2]+16)})`);
   gradient.addColorStop(.8, `rgb(${Color[0]+","+Color[1]+","+Color[2]})`);
@@ -130,9 +141,9 @@ function draw(){
   if(window.WebEdition){
     ctx.fillText(`K: KeyBinds`, width-270, height-(gradY[1]-140));
     ctx.fillStyle = "#0005";
-    ctx.fillText(`You Are On The Limited Web Version`, 10, height-106);
-    ctx.fillText(`There Is Limited Music Included`, 10, height-58);
-    ctx.fillText(`ALT+SHIFT are disabled for keybinds`, 10, height-10);
+    ctx.fillText(`You Are On The Limited Web Version`, 10, height-154);
+    ctx.fillText(`There Is Limited Music Included`, 10, height-106);
+    ctx.fillText(`ALT+SHIFT are disabled for keybinds`, 10, height-58);
   
   } else{
     ctx.fillText(`Alt+Shift+`, width-gradX[1]+30+gradY[1]*6, height/2-125+gradY[1]*2);
@@ -239,7 +250,7 @@ async function SetList(){
   if(!window.songList){
    
     window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV"]
-    window.imageList=["song1.png","song2.png","song3.png","song4.png","song5.png"]
+    window.imageList=[]
  
   }
 }

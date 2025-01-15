@@ -13,4 +13,22 @@ p,h1,h2,h3,h4,h5,h6  {
     text-shadow: 0px 0px 30px rgb(0, 0, 0);
     font-family: 'Ubuntu';font-size: 22px;
     color: rgb(0, 0, 0);
-  }
+}
+
+a{
+    position:absolute;
+    left:15px;
+    bottom:15px;
+    text-decoration:none;
+    color: #ccc;
+    box-sizing: border-box;
+    outline : 3px solid #ccc;
+    background-color:#0f0f0f;
+    padding: 10px;
+    margin: 15px 0 0;
+    display: inline-block;
+
+}
+canvas{
+    position: absolute;
+}
