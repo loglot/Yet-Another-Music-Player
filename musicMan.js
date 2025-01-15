@@ -150,17 +150,37 @@ function draw(){
     ctx.fillText(`Alt+Shift+K`, width-270, height-(gradY[1]-140));
 
   }
+  
+  ctx.fillStyle = `rgba(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)+","+(Math.max(centerLogoA[1],centerLogoA[0]))})`;
+ctx.beginPath();
+ctx.arc(width/2, height/2, 210, 0, 2 * Math.PI);
+ctx.fill();
+ctx.fillStyle = `rgba(${(Color[0]+76)+","+(Color[1]+76)+","+(Color[2]+76)+","+(Math.max(centerLogoA[1],centerLogoA[0]))})`;
+ctx.beginPath();
+ctx.arc(width/2, height/2, 200, 0, 2 * Math.PI);
+ctx.fill();
+ctx.beginPath()
+  ctx.fillStyle = `rgba(${(Color[0])+","+(Color[1])+","+(Color[2])+","+(centerLogoA[1])})`;
+  ctx.rect(width/2-50-25,height/2-100, 50, 200)
+  ctx.rect(width/2+50-25,height/2-100, 50, 200)
+  ctx.fill()
+  
+  ctx.lineWidth = 10;
+  ctx.strokeStyle = `rgba(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)+","+(centerLogoA[1])})`;
+  ctx.stroke()
+  ctx.beginPath()
 
-
-  ctx.fillStyle = `rgba(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)+","+(centerLogoA[1])})`;
-  ctx.fillRect(width/2-50-25,height/2-100, 50, 200)
-  ctx.fillRect(width/2+50-25,height/2-100, 50, 200)
-  ctx.fillStyle = `rgba(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)+","+(centerLogoA[0])})`;
+  ctx.fillStyle = `rgba(${(Color[0])+","+(Color[1])+","+(Color[2])+","+(centerLogoA[0])})`;
   ctx.beginPath()
   ctx.moveTo(width/2-50-25, height/2-100);
   ctx.lineTo(width/2+100-25, height/2);
   ctx.lineTo(width/2-50-25, height/2+100);  
+  ctx.lineTo(width/2-50-25, height/2-100);  
+  ctx.lineTo(width/2+100-25, height/2);
   ctx.fill()
+  ctx.lineWidth = 10;
+  ctx.strokeStyle = `rgba(${(Color[0]-26)+","+(Color[1]-26)+","+(Color[2]-26)+","+(centerLogoA[0])})`;
+  ctx.stroke()
 
 
 }
@@ -250,7 +270,7 @@ async function SetList(){
   if(!window.songList){
    
     window.songList=["song1.WAV","song2.WAV","song3.WAV","song4.WAV","song5.WAV"]
-    window.imageList=[]
+    window.imageList=["song1.png","song2.png","song3.png","song4.png","song5.png"]
  
   }
 }
