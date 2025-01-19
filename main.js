@@ -9,8 +9,8 @@ const win = new BrowserWindow({
   transparent: true, frame: false,
 })
 win.webContents.executeJavaScript(`window.WebEdition = false`)
-// win.setIgnoreMouseEvents(true)
-// win.setAlwaysOnTop(true, 'screen');
+win.setIgnoreMouseEvents(true)
+win.setAlwaysOnTop(true, 'screen');
   win.loadFile('indexDesk.html')
   //  win.setFullScreen(true)
   // win.webContents.on('did-finish-load', () => {
